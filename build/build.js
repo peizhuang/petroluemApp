@@ -26,19 +26,10 @@ webpack(webpackConfig, function (err, stats) {
   spinner.stop()
   if (err) throw err
   process.stdout.write(stats.toString({
-<<<<<<< HEAD
       colors: true,
       modules: false,
       children: false,
       chunks: false,
       chunkModules: false
     }) + '\n')
-=======
-    colors: true,
-    modules: false,
-    children: false,
-    chunks: false,
-    chunkModules: false
-  }) + '\n')
->>>>>>> 517dc4fbb7eca57a37cf75c8f3b7288e1e0000de
 })

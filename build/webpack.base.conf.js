@@ -2,10 +2,7 @@ var path = require('path')
 var config = require('../config')
 var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
-<<<<<<< HEAD
 var webpack = require("webpack")
-=======
->>>>>>> 517dc4fbb7eca57a37cf75c8f3b7288e1e0000de
 
 module.exports = {
   entry: {
@@ -63,19 +60,15 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-<<<<<<< HEAD
       },
       {
         test: /vux.src.*?js$/,
         loader: 'babel'
-=======
->>>>>>> 517dc4fbb7eca57a37cf75c8f3b7288e1e0000de
       }
     ]
   },
   vue: {
     loaders: utils.cssLoaders()
-<<<<<<< HEAD
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('common.js'),
@@ -84,7 +77,4 @@ module.exports = {
       $: "jquery"
     })
   ]
-=======
-  }
->>>>>>> 517dc4fbb7eca57a37cf75c8f3b7288e1e0000de
 }
