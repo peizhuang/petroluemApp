@@ -11,11 +11,15 @@ Vue.use(Vuex);
 
 export  default  new Vuex.Store({
   state: {
-    currentContent: "messageList"
+    currentContent: "messageList",
+    isFooterShow: true
   },
   mutations: {
     setCurrentContent: (state, content)=> {
       state.currentContent = content;
+    },
+    setFooterShow: (state, flag) => {
+      state.isFooterShow = flag;
     }
   },
   modules: {

@@ -4,6 +4,7 @@
 
 
 export const currentContent = state => state.currentContent;
+export const isFooterShow = state => state.isFooterShow;
 
 
 /*-----------------------------list Getters----------------------------------------------------*/

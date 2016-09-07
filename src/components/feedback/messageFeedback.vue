@@ -6,12 +6,15 @@
         <span>消息反馈</span>
       </li>
     </x-header>
+    <div class="flex">
+
+    </div>
 
   </div>
 </template>
 <style scoped>
   .feedback {
-    background-color: #eeeeee;
+    background-color: #F7F7F7;
   }
 </style>
 <script>

@@ -16,7 +16,11 @@
         </li>
         <li></li>
       </div>-->
-    <router-view></router-view>
+    <div class="flex listbody">
+      <router-view v-touch:swipeleft="onSwipeRight" v-touch:swiperight="onSwipeLeft"
+                   :transition="listTrans" class="view"></router-view>
+    </div>
+
     <!--<div class="content">
       <button @click="login">login</button>
       <button @click="req">click</button>
@@ -42,7 +46,8 @@
         // with hot-reload because the reloaded component
         // preserves its current state and we are modifying
         // its initial state.
-        show: false
+        show: false,
+        listTrans: "leftToRight"
       }
     },
     vuex: {
@@ -73,20 +78,33 @@
         }, (error)=> {
           console.log(JSON.stringify(error));
         });
+      },
+      onSwipeRight (){
+        this.listTrans = "rightToLeft";
+        this.$router.go("/list/handle");
+      },
+      onSwipeLeft (){
+        this.listTrans = "leftToRight";
+        this.$router.go("/list/general");
       }
     },
 
     route: {
-      activate: function (transition) {
-        if (this.listType == "general" && this.$route.name != "general") {
+      data: function (transition) {
+        if (this.$route.name == "general") {
           this.$router.go("/list/general");
         }
-        else if (this.listType == "handle" && this.$route.name != "handle") {
+        else if (this.$route.name == "handle") {
           this.$router.go("/list/handle");
-        } else {
+        }
+        else if (this.listType == "general") {
           this.$router.go("/list/general");
         }
-        transition.next();
+        else if (this.listType == "handle") {
+          this.$router.go("/list/handle");
+        }
+        else
+          transition.next();
       }
     }
   }
@@ -96,10 +114,87 @@
 <style scoped>
 
   .list {
-    background-color: #eeeeee;
+    background-color: #F7F7F7;
   }
 
   .title {
     display: flex;
   }
+
+  .listbody {
+    position: relative;
+  }
+
+  .listbody .view {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  @keyframes leftToRightEnter {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+
+  }
+
+  @keyframes leftToRightLeave {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+
+  }
+
+  .leftToRight-transition {
+    display: block;
+  }
+
+  .leftToRight-enter {
+    animation: leftToRightEnter .3s;
+  }
+
+  .leftToRight-leave {
+    animation: leftToRightLeave .3s;
+  }
+
+  @keyframes rightToLeftEnter {
+    0% {
+      transform: translateX(100%);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+
+  }
+
+  @keyframes rightToLeftLeave {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+
+  }
+
+  .rightToLeft-transition {
+    display: block;
+  }
+
+  .rightToLeft-enter {
+    animation: rightToLeftEnter .3s;
+  }
+
+  .rightToLeft-leave {
+    animation: rightToLeftLeave .3s;
+  }
+
 </style>

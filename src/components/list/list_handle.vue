@@ -1,5 +1,5 @@
 <template>
-  <div class="handle">
+  <div class="handle" >
 
   </div>
 </template>
@@ -17,7 +17,9 @@
       getters: {}
     },
     components: {},
-    methods: {}
+    methods: {
+
+    }
   }
 </script>
 

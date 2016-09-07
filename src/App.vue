@@ -2,7 +2,7 @@
   <div id="app">
     <router-view class="content" keep-alive></router-view>
 
-    <myfooter class="myfooter" :current-content="currentContent"></myfooter>
+    <myfooter v-show="isFooterShow" class="myfooter" :current-content="currentContent"></myfooter>
   </div>
 </template>
 
@@ -20,7 +20,7 @@
 //        currentContent: "messageList"
       }
     },
-    replace:false,
+    replace: false,
     components: {
 
       myfooter
@@ -29,9 +29,10 @@
     vuex: {
       getters: {
         currentContent: getter.currentContent,
+        isFooterShow: getter.isFooterShow,
         list_test: getter.list_test,
         history_test: getter.history_test,
-        feedback_test: getter.feedback_test
+        feedback_test: getter.feedback_test,
       }
     },
     props: {},
@@ -57,8 +58,91 @@
 
       /*      /!*按返回按钮产生的动作*!/
        function onBackKeyDown(e) {
+       e.stopPropagation();
+       if (!$(".setting").hasClass("hidden")) {
+       if ($("#myModal").hasClass("in")) {
+       myModal.modal("hide");
+       return;
+       }
+       switch (currentPage) {
+       case "settingIndex":
+       if ($("#myModal").hasClass("in")) {
+       myModal.modal("hide");
+       return;
+       }
+       $("#indexPublic ").tap();
+       break;
+       case  "userDetailsPage":
+       $("#userDetailsReturn").tap();
+       break;
+       case  "helpPage":
+       $("#helpReturn").tap();
+       break;
+       case "aboutPage":
+       $("#aboutReturn").tap();
+       break;
+       case "changePasswordPage":
+       $("#changePasswordReturn").tap();
+       break;
+       }
+       }
+       else {
+       if (currentMenuItem == "pageReceive") {
+       if ($(".dw-modal").length == 1) {
+       $(".dwb-c span").click();
+       }
+       else if (!myModalQuery.hasClass("hidden")) {
+       myModalQuery.myModalHide();
+       }
+       else if ($("#pageQuery").hasClass("pageActivity")) {
+       returnPageReceive();
+       }
+       else {
+       //todo 退出app
+       }
+       }
+       else if (currentMenuItem == "pageFeedback") {
+       if ($("#feedbackReturn>a").hasClass("hidden")) {
+       //todo 退出app
+       }
+       else {
+       var panel2Page = $($("#panel2").get(0).contentWindow.document.body);
+       if (panel2Page.find(".dw-modal").length == 1) {
+       panel2Page.find(".dwb-c span").click();
+       } else if (panel2Page.find(".myselectMenu").length > 0 && !panel2Page.find(".myselectMenu").hasClass("hidden")) {
+       panel2Page.find(".myselectMenu").addClass("hidden");
+       }
+       else {
+       feedbackReturn.tap();
+       }
+       }
 
+       }
+       else {
+       var panel3Page = $($("#panel3").get(0).contentWindow.document.body);
+       if ($("#historyReturn>a").hasClass("hidden")) {
+       //todo 退出app
+       if (!panel3Page.find(".myselectMenu").hasClass("hidden")) {
+       panel3Page.find(".myselectMenu").addClass("hidden");
+       }
+       else if (panel3Page.find(".dw-modal").length == 1) {
+       panel3Page.find(".dwb-c span").click();
+       }
+       else {
+       //todo 退出app
+       }
+       } else {
+       if (panel3Page.find(".contentLayer").hasClass("contentLayerShow")) {
+       panel3Page.find(".contentLayer").removeClass("contentLayerShow");
+       panel3Page.find(".content").fadeOut("fast");
+       }
 
+       else {
+       historyReturn.tap();
+       }
+       }
+       }
+       }
        }
 
 
@@ -107,10 +191,13 @@
     height: 100%;
     display: flex;
     flex-flow: column nowrap;
+    overflow: hidden;
   }
 
   .content {
     flex: 1;
+    display: flex;
+    flex-flow: column nowrap;
   }
 
   .myfooter {

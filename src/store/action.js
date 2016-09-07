@@ -6,6 +6,9 @@
 export const getCurrentContent = ({dispatch, state}, content) => {
   dispatch("setCurrentContent", content);
 };
+export const setFooterShow = ({dispatch}, flag) => {
+  dispatch("setFooterShow", flag);
+}
 
 
 /************************************ list action ******************************************/
