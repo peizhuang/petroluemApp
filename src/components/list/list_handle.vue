@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import {list_test, currentContent} from '../../store/getter'
+  import {currentContent} from '../../store/getter'
   //  import Alert from 'vux/src/components/alert'
 
 

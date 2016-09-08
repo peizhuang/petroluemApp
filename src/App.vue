@@ -3,11 +3,12 @@
     <router-view class="content" keep-alive></router-view>
 
     <myfooter v-show="isFooterShow" class="myfooter" :current-content="currentContent"></myfooter>
+    <toast :show.sync="toastShow" @on-hide="onHide" type="text" :time="3000">再按一次退出</toast>
   </div>
 </template>
 
 <script>
-
+  import  Toast from 'vux/src/components/toast'
   import myfooter from 'components/footer'
   import store from './store/store'
   import * as getter from './store/getter'
@@ -17,25 +18,29 @@
   export default {
     data(){
       return {
-//        currentContent: "messageList"
+        toastShow: false
       }
     },
     replace: false,
     components: {
-
-      myfooter
+      myfooter,
+      Toast
     },
     store: store,
     vuex: {
       getters: {
         currentContent: getter.currentContent,
         isFooterShow: getter.isFooterShow,
-        list_test: getter.list_test,
         history_test: getter.history_test,
         feedback_test: getter.feedback_test,
       }
     },
     props: {},
+    methods: {
+      onHide (){
+        //toast退出时执行
+      }
+    },
     events: {
       'contentChanged': function (currentContent) {
         // 事件回调内的 `this` 自动绑定到注册它的实例上
@@ -43,6 +48,8 @@
       }
     },
     ready: function () {
+      var vm = this;
+
       function onOffline() {
         alert("offline");
       }
@@ -52,111 +59,30 @@
       }
 
       function onBackKeyDown(e) {
-        e.stopPropagation();
-        alert("backkey");
+        try {
+          var url = vm.$route.path;
+          if (vm.toastShow) {
+            navigator.app.exitApp();
+          }
+          else if (url != "/list" && url != "/feedback" && url != "/history")
+            window.history.back();
+          else {
+            vm.toastShow = true;
+          }
+        } catch (e) {
+          console.log(e);
+        }
       }
 
-      /*      /!*按返回按钮产生的动作*!/
-       function onBackKeyDown(e) {
-       e.stopPropagation();
-       if (!$(".setting").hasClass("hidden")) {
-       if ($("#myModal").hasClass("in")) {
-       myModal.modal("hide");
-       return;
-       }
-       switch (currentPage) {
-       case "settingIndex":
-       if ($("#myModal").hasClass("in")) {
-       myModal.modal("hide");
-       return;
-       }
-       $("#indexPublic ").tap();
-       break;
-       case  "userDetailsPage":
-       $("#userDetailsReturn").tap();
-       break;
-       case  "helpPage":
-       $("#helpReturn").tap();
-       break;
-       case "aboutPage":
-       $("#aboutReturn").tap();
-       break;
-       case "changePasswordPage":
-       $("#changePasswordReturn").tap();
-       break;
-       }
-       }
-       else {
-       if (currentMenuItem == "pageReceive") {
-       if ($(".dw-modal").length == 1) {
-       $(".dwb-c span").click();
-       }
-       else if (!myModalQuery.hasClass("hidden")) {
-       myModalQuery.myModalHide();
-       }
-       else if ($("#pageQuery").hasClass("pageActivity")) {
-       returnPageReceive();
-       }
-       else {
-       //todo 退出app
-       }
-       }
-       else if (currentMenuItem == "pageFeedback") {
-       if ($("#feedbackReturn>a").hasClass("hidden")) {
-       //todo 退出app
-       }
-       else {
-       var panel2Page = $($("#panel2").get(0).contentWindow.document.body);
-       if (panel2Page.find(".dw-modal").length == 1) {
-       panel2Page.find(".dwb-c span").click();
-       } else if (panel2Page.find(".myselectMenu").length > 0 && !panel2Page.find(".myselectMenu").hasClass("hidden")) {
-       panel2Page.find(".myselectMenu").addClass("hidden");
-       }
-       else {
-       feedbackReturn.tap();
-       }
-       }
 
-       }
-       else {
-       var panel3Page = $($("#panel3").get(0).contentWindow.document.body);
-       if ($("#historyReturn>a").hasClass("hidden")) {
-       //todo 退出app
-       if (!panel3Page.find(".myselectMenu").hasClass("hidden")) {
-       panel3Page.find(".myselectMenu").addClass("hidden");
-       }
-       else if (panel3Page.find(".dw-modal").length == 1) {
-       panel3Page.find(".dwb-c span").click();
-       }
-       else {
-       //todo 退出app
-       }
-       } else {
-       if (panel3Page.find(".contentLayer").hasClass("contentLayerShow")) {
-       panel3Page.find(".contentLayer").removeClass("contentLayerShow");
-       panel3Page.find(".content").fadeOut("fast");
-       }
+      function onPause() {
+        backforword = true;
+      }
 
-       else {
-       historyReturn.tap();
-       }
-       }
-       }
-       }
-       }
+      function onResume() {
 
+      }
 
-
-       function onPause() {
-       backforword = true;
-       }
-
-       function onResume() {
-       cordova.plugins.notification.local.clearAll(function () {
-
-       }, this);
-       backforword = false;
-       }*/
 
       function onDeviceReady() {
         document.addEventListener("offline", onOffline, false);
@@ -215,4 +141,10 @@
   .fade-leave {
 
   }
+
+  .weui_toast {
+    bottom: 7em !important;
+    top: inherit !important;
+  }
+
 </style>

@@ -24,7 +24,18 @@ export default function (router) {
       component: require('./components/history/messageHistory')
     },
     "/setting": {
-      component: require('./components/setting/setting.vue')
+      component: require('./components/setting/setting.vue'),
+      subRoutes: {
+        "/userinfo": {
+          component: require('./components/setting/setting_userinfo.vue')
+        },
+        "password": {
+          component: require('./components/setting/setting_password.vue')
+        },
+        "about": {
+          component: require('./components/setting/setting_about.vue')
+        }
+      }
     }
   });
 
@@ -41,4 +52,12 @@ export default function (router) {
      '*': '/home'*/
   })
 
+ /* router.beforeEach(function ({ to, next }) {
+    if (to.path === '/list') {
+      // 返回一个断定会 true 或者 false 的 Promise
+      return AuthService.isLoggedIn()
+    } else {
+      next()
+    }
+  })*/
 }

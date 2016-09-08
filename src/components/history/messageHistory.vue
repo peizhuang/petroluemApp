@@ -20,6 +20,8 @@
           :min-year=2000
           :max-year=2050
           :value.sync="startDate"
+          confirm-text="确定"
+          cancel-text="取消"
           year-row="{value}年"
           month-row="{value}月"
           day-row="{value}日"
@@ -33,6 +35,8 @@
           :min-year=2000
           :max-year=2050
           :value.sync="endDate"
+          confirm-text="确定"
+          cancel-text="取消"
           year-row="{value}年"
           month-row="{value}月"
           day-row="{value}日"

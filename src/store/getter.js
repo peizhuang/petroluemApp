@@ -8,7 +8,6 @@ export const isFooterShow = state => state.isFooterShow;
 
 
 /*-----------------------------list Getters----------------------------------------------------*/
-export const list_test = state => state.List.num;
 export const list_type = state => state.List.listtype;
 
 

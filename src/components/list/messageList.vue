@@ -4,38 +4,28 @@
       <a slot="left"><i class="fa fa-search"></i></a>
       <a slot="right" v-link="{path:'/setting'}"><i class="fa fa-gear"></i></a>
       <li class="xHeaderTitle">
-        <span v-link='{path:"/list/general" ,activeClass:"active"}' @click='setListType("general")'>通知消息</span><span
-        v-link='{path:"/list/handle",activeClass:"active"}' @click='setListType("handle")'>处理意见</span>
+        <span @click='setListType("general")' :class="{active:isGeneralShow}">通知消息</span><span
+        @click='setListType("handle")' :class="{active:isHandleShow}">处理意见</span>
       </li>
     </x-header>
-    <!--  <div class="title">
-        <li></li>
-        <li>
-          <span v-link='{path:"/list/foo"}' >通知消息</span>
-          <span>处理意见</span>
-        </li>
-        <li></li>
-      </div>-->
+
     <div class="flex listbody">
-      <router-view v-touch:swipeleft="onSwipeRight" v-touch:swiperight="onSwipeLeft"
-                   :transition="listTrans" class="view"></router-view>
+      <component :is="listType" v-touch:swipeleft="onSwipeRight" v-touch:swiperight="onSwipeLeft"
+                 :transition="listTrans" class="view" keep-alive></component>
+      <!-- <router-view v-touch:swipeleft="onSwipeRight" v-touch:swiperight="onSwipeLeft"
+                    :transition="listTrans" class="view"></router-view>-->
     </div>
 
-    <!--<div class="content">
-      <button @click="login">login</button>
-      <button @click="req">click</button>
-      <alert :show.sync="show" title="恭喜您" button-text="好棒，去ATM转账">
-        <p style="text-align:center;">中大奖了！99999元只要转4000元手续费</p>
-      </alert>
-    </div>-->
   </div>
 </template>
 
 <script>
-  import {list_test, currentContent, list_type} from '../../store/getter'
+  import {currentContent, list_type} from '../../store/getter'
   import {setListType} from '../../store/action'
   import Alert from 'vux/src/components/alert'
   import XHeader from 'vux/src/components/x-header'
+  import General from './list_general.vue'
+  import Handle from './list_handle.vue'
   require('../../assets/css/common.css')
 
 
@@ -47,12 +37,13 @@
         // preserves its current state and we are modifying
         // its initial state.
         show: false,
-        listTrans: "leftToRight"
+        listTrans: "leftToRight",
+        isGeneralShow: true,
+        isHandleShow: false
       }
     },
     vuex: {
       getters: {
-        num: list_test,
         currentContent,
         listType: list_type
       },
@@ -62,7 +53,9 @@
     },
     components: {
       Alert,
-      XHeader
+      XHeader,
+      General,
+      Handle
     },
     methods: {
       login (){
@@ -79,34 +72,49 @@
           console.log(JSON.stringify(error));
         });
       },
+
+      //todo 左右滑动有bug，快速左右滑动到时候会出现滑动事件失效
       onSwipeRight (){
         this.listTrans = "rightToLeft";
-        this.$router.go("/list/handle");
+        this.setListType("handle");
+//        this.$router.go("/list/handle");
       },
       onSwipeLeft (){
         this.listTrans = "leftToRight";
-        this.$router.go("/list/general");
+        this.setListType("general");
+//        this.$router.go("/list/general");
       }
     },
-
+    watch: {
+      listType (val, oldvalue) {
+        if (val == "general") {
+          this.isGeneralShow = true;
+          this.isHandleShow = false;
+        } else {
+          this.isHandleShow = true;
+          this.isGeneralShow = false;
+        }
+      }
+    },
+/*
     route: {
       data: function (transition) {
-        if (this.$route.name == "general") {
-          this.$router.go("/list/general");
-        }
-        else if (this.$route.name == "handle") {
-          this.$router.go("/list/handle");
-        }
-        else if (this.listType == "general") {
-          this.$router.go("/list/general");
-        }
-        else if (this.listType == "handle") {
-          this.$router.go("/list/handle");
-        }
-        else
-          transition.next();
-      }
-    }
+       if (this.$route.name == "general") {
+       this.$router.go("/list/general");
+       }
+       else if (this.$route.name == "handle") {
+       this.$router.go("/list/handle");
+       }
+       else if (this.listType == "general") {
+       this.$router.go("/list/general");
+       }
+       else if (this.listType == "handle") {
+       this.$router.go("/list/handle");
+       }
+       else
+       transition.next();
+       }
+    }*/
   }
 </script>
 

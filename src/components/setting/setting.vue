@@ -3,6 +3,15 @@
     margin-top: 1em;
     width: 96%;
   }
+
+  .settingChild {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    top: 0;
+    left: 0;
+  }
 </style>
 <template>
   <div class="setting">
@@ -13,7 +22,7 @@
     </x-header>
     <div class="flex">
       <group>
-        <cell title="员工信息" is-link @click="">
+        <cell title="员工信息" is-link @click="" v-link="{path:'/setting/userinfo'}">
           <slot><i class="fa fa-user"></i></slot>
         </cell>
         <cell title="密码修改" is-link @click="">
@@ -28,6 +37,10 @@
 
       <x-button type="warn" class="logout">退出登录</x-button>
     </div>
+
+    <router-view keep-alive class="settingChild"></router-view>
+
+
   </div>
 </template>
 <script>
@@ -53,7 +66,7 @@
       }
     },
     route: {
-      activate: function (transition) {
+      data: function (transition) {
         this.setFooterShow(false);
         transition.next();
       },
