@@ -3,7 +3,7 @@
     <router-view class="content" keep-alive></router-view>
 
     <myfooter v-show="isFooterShow" class="myfooter" :current-content="currentContent"></myfooter>
-    <toast :show.sync="toastShow" @on-hide="onHide" type="text" :time="3000">再按一次退出</toast>
+    <toast :show.sync="toastShow" @on-hide="onHide" type="text" :time="60000">再按一次退出</toast>
   </div>
 </template>
 
@@ -97,22 +97,7 @@
   }
 </script>
 
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
-  li, ul {
-    list-style: none;
-  }
-
-  html, body {
-    width: 100%;
-    height: 100%;
-    font-size: 1em;
-  }
-
+<style scoped>
   #app {
     height: 100%;
     display: flex;

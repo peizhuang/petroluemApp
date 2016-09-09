@@ -1,7 +1,17 @@
-html {
-  /*font-size: 14px;*/
+* {
+  margin: 0;
+  padding: 0;
 }
 
+li, ul {
+  list-style: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-size: 1em;
+}
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -13,6 +23,8 @@ a {
 .flex {
   flex: 1;
 }
+
+
 
 /**********************************************Vux x-header  自定义央视***********************************************************/
 .vux-header-left {

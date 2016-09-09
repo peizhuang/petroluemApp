@@ -6,9 +6,16 @@
     display: flex;
     flex-flow: column nowrap;
   }
+
   .flex {
     overflow: auto;
   }
+
+  .disabled {
+    opacity: .4;
+  }
+
+
 </style>
 <template>
   <div class="userinfo">
@@ -16,6 +23,7 @@
       <li>
         <span>用户信息</span>
       </li>
+      <a slot="right" @click="updateUserInfo" :class="{disabled:disabled}">完成</a>
     </x-header>
     <div class="flex">
       <group>
@@ -31,45 +39,81 @@
       <group>
         <cell title="性别" :value="sex" primary="content"></cell>
         <cell title="年龄" :value="age" primary="content"></cell>
-        <cell title="地址" :value="address" primary="content"></cell>
-        <cell title="电话" :value="telephone" primary="content"></cell>
-        <cell title="邮箱" :value="mail" primary="content"></cell>
+        <x-input v-el:address title="地址" :value.sync="address" text-align="right" @on-change="disabled=false"></x-input>
+        <x-input v-el:telephone title="电话" :value.sync="telephone" text-align="right"
+                 @on-change="disabled=false"></x-input>
+        <x-input v-el:mail title="邮箱" :value.sync="mail" text-align="right" @on-change="disabled=false"></x-input>
       </group>
-      <group>
-        <cell title="关于" is-link @click="">
-          <slot><i class="fa "></i></slot>
-        </cell>
-      </group>
-
     </div>
+    <toast :show.sync="toastShow" type="warn" class="toast" :time="1500">{{toastText}}</toast>
   </div>
 </template>
 <script>
-  import XHeader from 'vux/src/components/x-header'
-  import Group from 'vux/src/components/group'
-  import Cell from 'vux/src/components/cell'
+  /* import XHeader from 'vux/src/components/x-header'
+   import Group from 'vux/src/components/group'
+   import Cell from 'vux/src/components/cell'
+   import XInput from 'vux/src/components/x-input'*/
+  import {XHeader, Group, Cell, XInput, Toast} from  'vux/src/components'
   require('../../assets/css/common.css')
   export default {
     data (){
       return {
-        name: "向思齐",
-        employeeId: "1654512",
-        workTime: "3",
-        employeeCompany: "成华区分公司",
-        employeeDepartment: "维修部",
-        position: "未知",
-        sex: "男",
-        age: "23",
-        address: "成都市高新区",
-        telephone: "13496452122",
-        mail: "dfhkoa@163.com"
+        name: "",
+        employeeId: "",
+        workTime: "",
+        employeeCompany: "",
+        employeeDepartment: "",
+        position: "",
+        sex: "",
+        age: "",
+        address: "",
+        telephone: "",
+        mail: "",
+        disabled: true,
+        toastShow: false,
+        toastText: ""
       }
 
     },
     components: {
       XHeader,
       Group,
-      Cell
+      Cell,
+      XInput,
+      Toast
+    },
+    methods: {
+      updateUserInfo(){
+        if (!this.disabled) {
+          if (!this.telephone) {
+            this.toastText = "电话不能为空，请重新输入",
+              this.toastShow = true;
+          } else if (!this.address) {
+            this.toastText = "地址不能为空，请重新输入",
+              this.toastShow = true;
+          }
+          else if (!this.mail) {
+            this.toastText = "邮箱不能为空，请重新输入",
+              this.toastShow = true;
+          }
+        }
+      },
+      checkChanged(val){
+
+        console.log(val);
+
+      }
+    },
+    route: {
+      data(transition) {
+        let vm = this;
+        setTimeout(function () {
+          vm.name = "向思齐";
+          vm.address = "成都市";
+          transition.next();
+        }, 3000);
+
+      }
     }
   }
 </script>
