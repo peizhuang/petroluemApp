@@ -4,6 +4,7 @@
     display: flex;
     padding: .5rem 0;
     border-top: 1px solid #cccccc;
+    color: #5f5151
   }
 
   .isActive {

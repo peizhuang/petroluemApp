@@ -12,6 +12,7 @@ html, body {
   height: 100%;
   font-size: 1em;
 }
+
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -23,8 +24,6 @@ a {
 .flex {
   flex: 1;
 }
-
-
 
 /**********************************************Vux x-header  自定义央视***********************************************************/
 .vux-header-left {
@@ -90,7 +89,7 @@ a {
 
 /**********************************************Vux selector  自定义样式***********************************************************/
 .weui_cell_select .weui_cell_bd {
-  text-align-last: end !important;
+  direction: rtl;
 }
 
 .weui_cell_select .weui_select {
