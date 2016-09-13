@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import { currentContent} from '../../store/getter'
+  import {} from '../../store/getter'
   import Alert from 'vux/src/components/alert'
 
 
@@ -27,7 +27,7 @@
     },
     vuex: {
       getters: {
-        currentContent
+
       }
     },
     components: {
@@ -57,5 +57,9 @@
 
   .title {
     display: flex;
+  }
+
+  .list {
+    /*background-color: #00ACFF;*/
   }
 </style>

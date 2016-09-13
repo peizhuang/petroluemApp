@@ -49,11 +49,11 @@
   </div>
 </template>
 <script>
-  /* import XHeader from 'vux/src/components/x-header'
-   import Group from 'vux/src/components/group'
-   import Cell from 'vux/src/components/cell'
-   import XInput from 'vux/src/components/x-input'*/
-  import {XHeader, Group, Cell, XInput, Toast} from  'vux/src/components'
+  import XHeader from 'vux/src/components/x-header'
+  import Group from 'vux/src/components/group'
+  import Cell from 'vux/src/components/cell'
+  import XInput from 'vux/src/components/x-input'
+  import Toast from 'vux/src/components/toast'
   require('../../assets/css/common.css')
   export default {
     data (){

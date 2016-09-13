@@ -1,7 +1,7 @@
 <template>
-  <div class="handle" >
+    <div class="handle">
 
-  </div>
+    </div>
 </template>
 
 <script>
@@ -17,13 +17,13 @@
       getters: {}
     },
     components: {},
-    methods: {
-
-    }
+    methods: {}
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  .handle {
+    /*background-color: green;*/
+  }
 </style>
