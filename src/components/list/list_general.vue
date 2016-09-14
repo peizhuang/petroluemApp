@@ -2,13 +2,14 @@
   <div class="list">
     <div v-for="item in chatList">
       <li class="time" v-show="timeShow(item.time,$index,chatList)">{{item.time}}</li>
-      <chat :type="item.type" :show-name="item.showName" :name="item.name" :value="item"
+      <chat :type="item.type" :show-name="item.showName" :name="item.name" :value="item" :click-pop-show="true"
             @on-click-message="onClickMessage">
         {{item.value}}
         <img :src="item.headUrl" alt="" slot="head">
       </chat>
     </div>
     <button @click="addItem" style="position: absolute;bottom: 0">add</button>
+    <popup align="top" :show="popShow" @on-show="$log('1')" @on-hide="$log('2')"></popup>
     <!-- <alert :show.sync="show" title="恭喜您" button-text="好棒，去ATM转账">
        <p style="text-align:center;">中大奖了！99999元只要转4000元手续费</p>
      </alert>
@@ -20,6 +21,7 @@
   import {} from '../../store/getter'
   import Alert from 'vux/src/components/alert'
   import Chat from '../components_own/chatList.vue'
+  import Popup from '../components_own/popup.vue'
 
   export default {
     data () {
@@ -47,7 +49,8 @@
     },
     components: {
       Alert,
-      Chat
+      Chat,
+      Popup
     },
     methods: {
       login (){

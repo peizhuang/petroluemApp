@@ -5,7 +5,9 @@
   }
 
   .xpz_popup.top {
-    top: 0;
+    top: -2em;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .xpz_popup.left {
@@ -23,21 +25,21 @@
   .xpz_popup.top .xpz_popup_menu:before {
     content: "";
     position: absolute;
-    /* width: 6px; */
-    /* height: 6px; */
-    top: -20px;
-    border-bottom: 5px solid black;
-    border-right: 5px solid black;
-    border-top: 5px solid transparent;
-    border-left: 5px solid transparent;
-    /* border: 1px solid black; */
-    /* -webkit-transform: rotate(90deg); */
-    background-color: black;
+    width: 0;
+    height: 0;
+    bottom: -1em;
+    border: 1px solid black;
+    border-width: 10px;
+    border-style: solid;
+    border-color: black transparent transparent;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .xpz_popup_menu {
     background-color: black;
     border-radius: 1em;
+    padding: .2em;
   }
 
   .xpz_popup_menu_item {
@@ -47,7 +49,7 @@
 
 </style>
 <template>
-  <div class="xpz_popup" :v-show="show" :class="align">
+  <div class="xpz_popup" v-show="show" :class="align">
     <li class="xpz_popup_menu">
       <span class="xpz_popup_menu_item">测试</span>
     </li>
@@ -67,6 +69,20 @@
       align: {
         type: String,
         default: "top"
+      }
+    },
+    watch: {
+      show (val){
+        if (val == true) {
+          this.$dispatch("on-show");
+        } else {
+          this.$dispatch("on-hide");
+        }
+      }
+    },
+    events: {
+      hidePopup(){
+        this.show = false;
       }
     }
   }

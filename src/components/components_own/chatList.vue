@@ -57,6 +57,7 @@
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;;
+    position: relative;
   }
 
   .xpz_chat .self {
@@ -77,10 +78,10 @@
     <span class="xpz_chat">
       <span class="xpz_chat_name" v-show="showName">{{name}}</span>
       <span class="xpz_chat_message" :class="type" :style="{background:back,color:color}"
-            @click="$dispatch('on-click-message',value)">
+            @click="messageClick">
+         <popup align="top" :show="popShow" @on-show="$log('1')" @on-hide="$log('2')"></popup>
         <slot></slot>
       </span>
-      <popup align="top" :show="true"></popup>
     </span>
   </div>
 </template>
@@ -88,7 +89,9 @@
   import Popup from './popup.vue'
   export  default {
     data(){
-      return {}
+      return {
+        popShow: false
+      }
     },
     props: {
       //聊天记录类型，包括self和other
@@ -116,9 +119,21 @@
       //在点击消息的时候，将该值传给父组件
       value: {
         type: Object
+      },
+      clickPopShow: {
+        type: Boolean,
+        default: false
       }
     },
-    methods: {},
+    methods: {
+      messageClick(){
+        if (!this.clickPopShow)
+          this.$dispatch('on-click-message', this.value);
+        else {
+          this.popShow = !this.popShow;
+        }
+      }
+    },
     components: {
       Popup
     }
