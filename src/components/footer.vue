@@ -17,13 +17,13 @@
     flex-flow: column nowrap;
   }
 
-  .menu span {
+  .menuItem span {
     flex: 1;
-    font-size: 1rem;
+    font-size: .8rem;
   }
 
-  .menu span:first-child {
-    font-size: 1.4rem;
+  .menuItem span:first-child {
+    font-size: 1rem;
   }
 
   #messageList {
@@ -35,7 +35,7 @@
     <li v-for="menu in menus" id="{{menu.id}}" :class="[menuItem]"
         @click="activeItem($index,menu.id)" v-link="menu.link">
       <span class="{{menu.class}}"></span>
-      <span>{{menu.label}}</span>
+      <span >{{menu.label}}</span>
     </li>
   </div>
 </template>

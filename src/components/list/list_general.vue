@@ -8,8 +8,6 @@
         <img :src="item.headUrl" alt="" slot="head">
       </chat>
     </div>
-    <button @click="addItem" style="position: absolute;bottom: 0">add</button>
-    <popup align="top" :show="popShow" @on-show="$log('1')" @on-hide="$log('2')"></popup>
     <!-- <alert :show.sync="show" title="恭喜您" button-text="好棒，去ATM转账">
        <p style="text-align:center;">中大奖了！99999元只要转4000元手续费</p>
      </alert>
@@ -30,14 +28,14 @@
         chatList: [{
           type: "self",
           name: "说不清",
-          value: "this is my message",
+          value: "this e",
           showName: true,
           headUrl: "http://img1.imgtn.bdimg.com/it/u=2828453573,3283969866&fm=21&gp=0.jpg",
           time: "2016-09-13 15:58"
         }, {
           type: "other",
-          name: "大王",
-          value: "I want to buy iphone7",
+          name: "王",
+          value: "I w",
           showName: true,
           headUrl: "http://img1.imgtn.bdimg.com/it/u=2828453573,3283969866&fm=21&gp=0.jpg",
           time: "2016-09-13 15:59"
@@ -74,7 +72,7 @@
         this.chatList.push({
           type: "other",
           name: "大王",
-          value: "I want to buy iphone7",
+          value: "I wa",
           showName: true,
           headUrl: "http://img1.imgtn.bdimg.com/it/u=2828453573,3283969866&fm=21&gp=0.jpg",
           time: "2016-09-13 17:43"

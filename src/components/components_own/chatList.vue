@@ -58,6 +58,7 @@
     -moz-border-radius: 4px;
     border-radius: 4px;;
     position: relative;
+    outline: none;
   }
 
   .xpz_chat .self {
@@ -69,6 +70,21 @@
     background-color: #139eff;
     color: #fafafc;
   }
+
+  .popMenu {
+    border-right: 1px solid white;
+    padding: .2em .4em;
+    word-break: keep-all;
+    display: table-cell;
+  }
+
+  .popMenu:nth-last-child(1) {
+    border: none;
+  }
+
+  .popMenu:active {
+    color: #eeeeee;
+  }
 </style>
 <template>
   <div class="xpz_chat_content" :class="{xpz_chat_content_reverse:type=='self'}">
@@ -78,10 +94,17 @@
     <span class="xpz_chat">
       <span class="xpz_chat_name" v-show="showName">{{name}}</span>
       <span class="xpz_chat_message" :class="type" :style="{background:back,color:color}"
-            @click="messageClick">
-         <popup align="top" :show="popShow" @on-show="$log('1')" @on-hide="$log('2')"></popup>
+            @click="messageClick" tabindex="1" @blur="popShow=false">
+        <!--popup的使用视情况而定-->
+          <popup align="top" :show="popShow">
+           <ul style="overflow: auto">
+             <li class="popMenu" @click.stop="query">查找</li>
+             <li class="popMenu" @click.stop="add">添加</li>
+           </ul>
+         </popup>
         <slot></slot>
       </span>
+
     </span>
   </div>
 </template>
@@ -132,6 +155,14 @@
         else {
           this.popShow = !this.popShow;
         }
+      },
+      query(){
+        console.log("query:" + JSON.stringify(this.value));
+        this.popShow = false;
+      },
+      add(){
+        console.log("add:" + JSON.stringify(this.value));
+        this.popShow = false;
       }
     },
     components: {
