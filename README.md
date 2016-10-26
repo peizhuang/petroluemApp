@@ -1,4 +1,4 @@
-# petroleum
+# vueApp
 
 > A Vue.js project
 
